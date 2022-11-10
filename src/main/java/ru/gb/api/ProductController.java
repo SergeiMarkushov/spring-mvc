@@ -49,4 +49,10 @@ public class ProductController {
         productRepository.add(product);
         return "redirect:/products";
     }
+
+    @GetMapping("/all")
+    public String showProducts(Model model) {
+        model.addAttribute("productList", productRepository.getProductList());
+        return "products";
+    }
 }

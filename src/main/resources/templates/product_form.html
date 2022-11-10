@@ -6,7 +6,8 @@
 </head>
 <body>
     <h1>ADD NEW PRODUCT</h1>
-        <form method="get" th:action="@{'/product_add'}">
+<!--        <form method="get" th:action="@{'/product_add'}">-->
+    <form th:action="@{'/products/product_add'}" method="post">
             <span>id</span>
             <input name="id" type="number"><br>
             <span>title</span>
@@ -14,6 +15,7 @@
             <span>cost</span>
             <input name="cost" type="text"><br>
             <button type="submit">SAVE</button>
+<!--            <a type="button" th:href="@{/product/addProduct(product=${product.id})}" class="btn btn-success">Добавить </a>-->
         </form>
 </body>
 </html>
