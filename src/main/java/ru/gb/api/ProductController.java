@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.model.Product;
-import ru.gb.model.ProductRepository;
 import ru.gb.serveces.ProductService;
 
 import java.util.Objects;
@@ -15,24 +14,22 @@ import java.util.Objects;
 public class ProductController {
 
     private ProductService productService;
-    private ProductRepository productRepository;
 
     @Autowired
-    public ProductController(ProductService productService, ProductRepository productRepository) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.productRepository = productRepository;
     }
 
     @GetMapping()
     public String getProducts(Model model) {
-        model.addAttribute("productList", productRepository.getAllProducts());
+        model.addAttribute("productList", productService.getAllProducts());
         return "products";
     }
 
     @GetMapping("/{id}")
     @ResponseBody
     public String getProduct(@PathVariable Long id) {
-        Product product = productService.getProductList().stream()
+        Product product = productService.getAllProducts().stream()
                 .filter(it -> Objects.equals(id, it.getId()))
                 .findFirst().orElse(null);
         return product.getTitle() + " " + product.getCost() + " p.";
@@ -43,16 +40,25 @@ public class ProductController {
         return "product_form";
     }
 
-    @GetMapping("/product_add")
-    public String addProduct(@RequestParam Long id, @RequestParam String title, @RequestParam String cost) {
-        Product product = new Product(id,title,Double.valueOf(cost));
-        productRepository.add(product);
+    @PostMapping("/product_add")
+    public String addProduct(@RequestParam String title, @RequestParam String cost) {
+        Product product = new Product(title,Double.valueOf(cost));
+        productService.add(product);
         return "redirect:/products";
+    }
+
+    @PostMapping("/{id}")
+    @ResponseBody
+    public String getProductById(@RequestParam Long id) {
+        Product product = productService.getAllProducts().stream()
+                .filter(it -> Objects.equals(id, it.getId()))
+                .findFirst().orElse(null);
+        return product.getTitle() + " " + product.getCost() + " p.";
     }
 
     @GetMapping("/all")
     public String showProducts(Model model) {
-        model.addAttribute("productList", productRepository.getProductList());
+        model.addAttribute("productList", productService.getAllProducts());
         return "products";
     }
 }

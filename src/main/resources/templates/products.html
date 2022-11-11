@@ -23,8 +23,9 @@
         <td>
             <a th:href="@{http://localhost:8180/app/products/{id}(id = ${product.getId()})}">More...</a>
         </td>
+
 </table>
-<td> <a th:href="@{http://localhost:8180/app/products/show_form}">add product</a> </td>
+<td> <a th:href="@{http://localhost:8180/app/products/show_form}">add product</a> </td><br>
 
 <h1 th:text="${productList.size()}" />
 </body>
