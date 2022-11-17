@@ -1,23 +1,24 @@
 package ru.gb.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
-    private  Long id;
+    private Long id;
     private String title;
     private Double cost;
-    private static Long idProduct = 1L;
+    private Integer count;
+    private String description;
 
-    public Product(String title, Double cost) {
+    public Product(Long id, String title, Double cost, Integer count) {
+        this.id = id;
         this.title = title;
         this.cost = cost;
-        this.id = idProduct;
-        idProduct += 1L;
-    }
-
-    public static Long getIdProduct() {
-        return idProduct;
+        this.count = count;
     }
 }

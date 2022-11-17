@@ -1,16 +1,16 @@
 package ru.gb.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.gb.model.Product;
 import ru.gb.serveces.ProductService;
 
-import java.util.Objects;
+import java.util.List;
 
-@Controller
-@RequestMapping("/products")
+@RestController
 public class ProductController {
 
     private ProductService productService;
@@ -20,45 +20,18 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping()
-    public String getProducts(Model model) {
-        model.addAttribute("productList", productService.getAllProducts());
-        return "products";
+    @GetMapping("/products")
+    public List<Product> getAllProducts() {
+    return productService.getAllProducts();
     }
 
-    @GetMapping("/{id}")
-    @ResponseBody
-    public String getProduct(@PathVariable Long id) {
-        Product product = productService.getAllProducts().stream()
-                .filter(it -> Objects.equals(id, it.getId()))
-                .findFirst().orElse(null);
-        return product.getTitle() + " " + product.getCost() + " p.";
+    @GetMapping("/products/delete/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteById(id);
     }
 
-    @GetMapping("/show_form")
-    public String showFormPage() {
-        return "product_form";
-    }
-
-    @PostMapping("/product_add")
-    public String addProduct(@RequestParam String title, @RequestParam String cost) {
-        Product product = new Product(title,Double.valueOf(cost));
-        productService.add(product);
-        return "redirect:/products";
-    }
-
-    @PostMapping("/{id}")
-    @ResponseBody
-    public String getProductById(@RequestParam Long id) {
-        Product product = productService.getAllProducts().stream()
-                .filter(it -> Objects.equals(id, it.getId()))
-                .findFirst().orElse(null);
-        return product.getTitle() + " " + product.getCost() + " p.";
-    }
-
-    @GetMapping("/all")
-    public String showProducts(Model model) {
-        model.addAttribute("productList", productService.getAllProducts());
-        return "products";
+    @GetMapping("/products/change_count")
+    public void changeCount(@RequestParam Long productId, @RequestParam Integer delta) {
+        productService.changeCount(productId, delta);
     }
 }
