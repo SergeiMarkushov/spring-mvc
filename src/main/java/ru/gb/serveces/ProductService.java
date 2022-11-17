@@ -30,6 +30,10 @@ public class ProductService {
 
     public void changeCount(Long productId, Integer delta) {
         Product product = productRepository.findByID(productId);
-        product.setCount(product.getCount() + delta);
+        if((product.getCount()+delta)<0) {
+            product.setCount(0);
+        } else {
+            product.setCount(product.getCount() + delta);
+        }
     }
 }
