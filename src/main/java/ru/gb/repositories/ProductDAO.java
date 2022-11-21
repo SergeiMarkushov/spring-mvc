@@ -9,5 +9,5 @@ public interface ProductDAO {
     List<ProductHW> findAll();
     ProductHW findByTitle(String title);
     void deleteById(Long id);
-    void saveOrUpdate(ProductHW productHW);
+    ProductHW saveOrUpdate(ProductHW productHW);
 }

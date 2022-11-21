@@ -1,17 +1,21 @@
 package ru.gb.repositories;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import ru.gb.model.ProductHW;
 import ru.gb.model.SessionFactoryUtils;
 
 import java.util.List;
 
+@Repository
 public class ProductDaoImpl implements ProductDAO{
     private SessionFactoryUtils sessionFactoryUtils;
 
     public ProductDaoImpl(SessionFactoryUtils sessionFactoryUtils) {
         this.sessionFactoryUtils = sessionFactoryUtils;
     }
+
+
 
     @Override
     public ProductHW findById(Long id) {
@@ -56,11 +60,12 @@ public class ProductDaoImpl implements ProductDAO{
 
 
     @Override
-    public void saveOrUpdate(ProductHW productHW) {
+    public ProductHW saveOrUpdate(ProductHW productHW) {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.getTransaction().begin();
             session.saveOrUpdate(productHW);
             session.getTransaction().commit();
         }
+        return productHW;
     }
 }
