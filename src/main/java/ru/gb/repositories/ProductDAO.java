@@ -1,13 +1,17 @@
 package ru.gb.repositories;
 
-import ru.gb.model.ProductHW;
+import ru.gb.model.ProductsEntity;
 
 import java.util.List;
 
 public interface ProductDAO {
-    ProductHW findById(Long id);
-    List<ProductHW> findAll();
-    ProductHW findByTitle(String title);
+    ProductsEntity findById(Long id);
+
+    List<ProductsEntity> findAll();
+
+    ProductsEntity findByTitle(String title);
+
     void deleteById(Long id);
-    ProductHW saveOrUpdate(ProductHW productHW);
+
+    ProductsEntity saveOrUpdate(ProductsEntity product);
 }

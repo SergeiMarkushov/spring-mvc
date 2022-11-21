@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import ru.gb.model.ProductHW;
+import ru.gb.model.ProductsEntity;
 import ru.gb.serveces.ProductService;
 
 import java.util.List;
@@ -20,8 +20,8 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<ProductHW> getAllProducts() {
-       return productService.getAllProducts();
+    public List<ProductsEntity> getAllProducts() {
+        return productService.getAllProducts();
     }
 
     @GetMapping("/products/delete/{id}")
@@ -29,8 +29,9 @@ public class ProductController {
         productService.deleteById(id);
     }
 
-//    @GetMapping("/products/change_count")
-//    public void changeCount(@RequestParam Long productId, @RequestParam Integer delta) {
-//        productService.changeCount(productId, delta);
-//    }
+    @GetMapping("/product_info/{id}")
+    public void productInfo(@PathVariable Long id) {
+        productService.getProductInfo(id);
+    }
+
 }
