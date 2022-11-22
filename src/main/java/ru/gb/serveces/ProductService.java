@@ -1,39 +1,34 @@
 package ru.gb.serveces;
 
 import org.springframework.stereotype.Service;
-import ru.gb.model.Product;
-import ru.gb.repositories.ProductRepository;
+import ru.gb.model.ProductsEntity;
+import ru.gb.repositories.ProductDaoImpl;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ProductService {
+    private ProductDaoImpl productDao;
 
-    private ProductRepository productRepository;
 
-
-    public ProductService (ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductDaoImpl productDao) {
+        this.productDao = productDao;
     }
 
-    public List<Product> getAllProducts() {
-        return Collections.unmodifiableList(productRepository.getAllProducts());
+    public List<ProductsEntity> getAllProducts() {
+        return Collections.unmodifiableList(productDao.findAll());
     }
 
-    public void add(Product product) {
-        productRepository.add(product);
+    public void add(ProductsEntity product) {
+        productDao.saveOrUpdate(product);
     }
+
     public void deleteById(Long id) {
-        productRepository.deleteById(id);
+        productDao.deleteById(id);
     }
 
-    public void changeCount(Long productId, Integer delta) {
-        Product product = productRepository.findByID(productId);
-        if((product.getCount()+delta)<0) {
-            product.setCount(0);
-        } else {
-            product.setCount(product.getCount() + delta);
-        }
+    public ProductsEntity productInfo(Long id) {
+        return productDao.productInfo(id);
     }
 }
