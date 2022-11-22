@@ -68,7 +68,7 @@ public class ProductDaoImpl implements ProductDAO {
         return product;
     }
 
-    public ProductsEntity getProductInfo(Long id) {
+    public ProductsEntity productInfo(Long id) {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.getTransaction().begin();
             ProductsEntity product = session.get(ProductsEntity.class, id);

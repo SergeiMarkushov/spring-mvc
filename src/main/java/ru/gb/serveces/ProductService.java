@@ -28,7 +28,7 @@ public class ProductService {
         productDao.deleteById(id);
     }
 
-    public ProductsEntity getProductInfo(Long id) {
-        return productDao.getProductInfo(id);
+    public ProductsEntity productInfo(Long id) {
+        return productDao.productInfo(id);
     }
 }

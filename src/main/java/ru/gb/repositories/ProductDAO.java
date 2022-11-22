@@ -14,4 +14,6 @@ public interface ProductDAO {
     void deleteById(Long id);
 
     ProductsEntity saveOrUpdate(ProductsEntity product);
+
+    ProductsEntity productInfo(Long id);
 }

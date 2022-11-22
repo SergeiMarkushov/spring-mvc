@@ -29,9 +29,9 @@ public class ProductController {
         productService.deleteById(id);
     }
 
-    @GetMapping("/product_info/{id}")
-    public void productInfo(@PathVariable Long id) {
-        productService.getProductInfo(id);
+    @GetMapping("/products/productInfo/{id}")
+    public ProductsEntity productInfo(@PathVariable Long id) {
+       return productService.productInfo(id);
     }
 
 }
