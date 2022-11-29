@@ -32,7 +32,7 @@ public class ProductController {
 
 
     @GetMapping("/products/find_by_price")
-    public List<ProductsEntity> findAllByCostBetween(@RequestParam Integer min,@RequestParam Integer max) {
-        return  productService.findAllByCostBetween(min,max);
+    public List<ProductsEntity> findAllByCostBetween(@RequestParam Integer minPrice,@RequestParam Integer maxPrice) {
+        return  productService.findAllByCostBetween(minPrice,maxPrice);
     }
 }
