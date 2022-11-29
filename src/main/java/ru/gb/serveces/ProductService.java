@@ -2,33 +2,32 @@ package ru.gb.serveces;
 
 import org.springframework.stereotype.Service;
 import ru.gb.model.ProductsEntity;
-import ru.gb.repositories.ProductDaoImpl;
+import ru.gb.repositories.ProductDAO;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ProductService {
-    private ProductDaoImpl productDao;
+    private ProductDAO productDAO;
 
-
-    public ProductService(ProductDaoImpl productDao) {
-        this.productDao = productDao;
+    public ProductService (ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
     public List<ProductsEntity> getAllProducts() {
-        return Collections.unmodifiableList(productDao.findAll());
-    }
-
-    public void add(ProductsEntity product) {
-        productDao.saveOrUpdate(product);
+        return productDAO.findAll();
     }
 
     public void deleteById(Long id) {
-        productDao.deleteById(id);
+        productDAO.deleteById(id);
     }
 
-    public ProductsEntity productInfo(Long id) {
-        return productDao.productInfo(id);
+    public ProductsEntity save(ProductsEntity product) {
+       return productDAO.save(product);
     }
+
+    public List<ProductsEntity> findAllByCostBetween(int min, int max) {
+        return productDAO.findAllByCostBetween(min,max);
+    }
+
 }

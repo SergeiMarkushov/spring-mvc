@@ -9,13 +9,13 @@
     <script src="https://maxcdn.bootsrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="indexProd.js"></script>
+    <script src="index.js"></script>
 </head>
 
 <body>
 <div class="container" ng-controller="indexControllerProd">
     <h3>Список продуктов</h3>
-    <table class="table table-hover" cellpadding="0" cellspacing="0">
+    <table class="table table-hover">
         <tr>
             <td>ID</td>
             <td>Название продукта</td>
@@ -29,12 +29,32 @@
             <td>{{p.cost}}</td>
             <td>
                 <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
-                <button class="btn btn-info" ng-click="productInfo(p.id)">Информация</button>
+                <button class="btn btn-info" ng-click="showInfo(p.id)">Информация</button>
             </td>
         </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-outline-success" ng-click="showForm">Добавить товар</button>
+
+    <p></p>
+    <h3>Добавить продукт</h3>
+    <form novalidate ng-submit="createProduct()">
+        <input class="form-control" type="text" placeholder="Название" ng-model="newProduct.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Цена" ng-model="newProduct.cost">
+        <p></p>
+        <button type="submit" class="btn btn-outline-success">Добавить товар</button>
+    </form>
+
+    <p></p>
+    <h3>Фильтр по цене</h3>
+    <form novalidate ng-submit="findProductByPriceBetween()">
+        <input class="form-control" type="number" placeholder="Минимальная цена" ng-model="filterPrice.minPrice">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="filterPrice.maxPrice">
+        <p></p>
+        <button type="submit" class="btn btn-outline-success">Фильтровать</button>
+    </form>
 </div>
+
 </body>
 </html>
