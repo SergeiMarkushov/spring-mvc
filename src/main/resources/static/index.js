@@ -32,6 +32,8 @@ angular.module('app', []).controller('indexControllerProd', function ($scope, $h
                 maxPrice: $scope.filterPrice.maxPrice,
             }
         }).then(function (responce) {
+            $scope.filterPrice.minPrice = 0;
+            $scope.filterPrice.maxPrice = 300000;
             $scope.ProductList = responce.data;
         });
     }
