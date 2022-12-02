@@ -3,7 +3,6 @@ package ru.gb.api;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.DTO.ProductDTO;
-import ru.gb.model.ProductsEntity;
 import ru.gb.serveces.ProductService;
 
 @RequestMapping("/api/v1/products")
@@ -25,7 +24,7 @@ public class ProductController {
         if (page < 1) {
             page = 1;
         }
-        return productService.find(minCost, maxCost, partTitle, page).map(p -> new ProductDTO(p));
+        return productService.find(minCost, maxCost, partTitle, page).map(ProductDTO::new);
     }
 
     @DeleteMapping("/{id}")
@@ -33,26 +32,16 @@ public class ProductController {
         productService.deleteById(id);
     }
 
-//    @PostMapping
-//    public ProductsEntity saveNewProduct(@RequestBody ProductsEntity product) {//dto
-//        product.setId(null);
-//        return productService.save(product);
-//    }
 
     @PostMapping
-    public ProductsEntity saveNewProduct(@RequestBody ProductDTO product) {//dto
+    public ProductDTO saveNewProduct(@RequestBody ProductDTO product) {//dto
         product.setId(null);
-        return productService.save(productService.productEntityFromProductDTO(product));
+        return productService.productDTOToSave(product);
     }
 
-//    @PutMapping
-//    public ProductsEntity updateStudent(@RequestBody ProductsEntity product) {//dto
-//        return productService.save(product);
-//    }
-
     @PutMapping
-    public ProductsEntity updateStudent(@RequestBody ProductDTO product) {//dto
-        return productService.save(productService.productEntityFromProductDTO(product));
+    public ProductDTO updateProduct(@RequestBody ProductDTO product) {//dto
+        return productService.productDTOToUpdate(product);
     }
 
 

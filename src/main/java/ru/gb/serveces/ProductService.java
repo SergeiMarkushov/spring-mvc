@@ -49,11 +49,18 @@ public class ProductService {
         return productDAO.findAll(spec, PageRequest.of(page - 1, 10));
     }
 
-    public ProductsEntity productEntityFromProductDTO(ProductDTO product) {
-        ProductsEntity productsEntity= new ProductsEntity();
-        productsEntity.setId(product.getId());
+    public ProductDTO productDTOToUpdate(ProductDTO product) {
+        ProductsEntity productsEntity = getProductById(product.getId());
         productsEntity.setTitle(product.getTitle());
         productsEntity.setCost(product.getCost());
-        return productsEntity;
+        save(productsEntity);
+        return product;
+    }
+    public ProductDTO productDTOToSave(ProductDTO product) {
+        ProductsEntity productsEntity = new ProductsEntity();
+        productsEntity.setTitle(product.getTitle());
+        productsEntity.setCost(product.getCost());
+        save(productsEntity);
+        return product;
     }
 }
