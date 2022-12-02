@@ -14,6 +14,28 @@
 
 <body>
 <div class="container" ng-controller="indexControllerProd">
+<p></p>
+    <h3>Поиск</h3>
+    <form novalidate ng-submit="loadProducts()">
+        <div class="form-floating input-group-sm">
+            <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.part_title">
+            <label for="filterTitle">Название товара</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="number" class="form-control" id="filterMinCost" placeholder="" ng-model="filter.min_cost">
+            <label for="filterMinCost">Минимальная цена</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="number" class="form-control" id="filterMaxCost" placeholder="" ng-model="filter.max_cost">
+            <label for="filterTitle">Максимальна цена</label>
+        </div>
+        <p></p>
+        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Искать</button>
+        <button class="btn btn-danger btn-sm" style="width: 100%;" ng-click="loadProducts()">Сбросить</button>
+    </form>
+
     <h3>Список продуктов</h3>
     <table class="table table-hover">
         <tr>
@@ -46,14 +68,15 @@
     </form>
 
     <p></p>
-    <h3>Фильтр по цене</h3>
-    <form novalidate ng-submit="findProductByPriceBetween()">
-        <input class="form-control" type="number" placeholder="Минимальная цена" ng-model="filterPrice.minPrice">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="filterPrice.maxPrice">
-        <p></p>
-        <button type="submit" class="btn btn-outline-success">Фильтровать</button> <button class="btn btn-danger" ng-click="showProducts()">Сбросить</button>
-    </form>
+    <p></p>
+<!--    <h3>Фильтр по цене</h3>-->
+<!--    <form novalidate ng-submit="findProductByPriceBetween()">-->
+<!--        <input class="form-control" type="number" placeholder="Минимальная цена" ng-model="filterPrice.minPrice">-->
+<!--        <p></p>-->
+<!--        <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="filterPrice.maxPrice">-->
+<!--        <p></p>-->
+<!--        <button type="submit" class="btn btn-outline-success">Фильтровать</button> <button class="btn btn-danger" ng-click="showProducts()">Сбросить</button>-->
+<!--    </form>-->
 </div>
 
 </body>
