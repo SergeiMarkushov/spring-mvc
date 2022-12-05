@@ -1,21 +1,23 @@
 package ru.gb.serveces;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.gb.DTO.ProductDTO;
+import ru.gb.exceptions.ResourceNotFoundException;
 import ru.gb.model.ProductsEntity;
 import ru.gb.repositories.ProductDAO;
 import ru.gb.specifications.ProductSpecifications;
 
-@Service
-public class ProductService {
-    private ProductDAO productDAO;
+import java.util.Optional;
 
-    public ProductService (ProductDAO productDAO) {
-        this.productDAO = productDAO;
-    }
+@Service
+@RequiredArgsConstructor
+public class ProductService {
+    private final ProductDAO productDAO;
 
     public void deleteById(Long id) {
         productDAO.deleteById(id);
@@ -25,42 +27,26 @@ public class ProductService {
        return productDAO.save(product);
     }
 
-    public ProductsEntity getProductById(Long id) {
-        return productDAO.getReferenceById(id);
-    }
-
-    public Page<ProductsEntity> find(Integer minCost, Integer maxCost, String partTitle, Integer page){
+    public Page<ProductsEntity> findAll(Integer minCost, Integer maxCost, String partTitle, Integer page){
         Specification<ProductsEntity> spec = Specification.where(null);
-        // select p from ProductEntity p where true
         if (minCost != null) {
             spec = spec.and(ProductSpecifications.costGreaterOrEquals(minCost));
-            //select p from ProductEntity p where true and p.price > minPrice
         }
         if (maxCost != null) {
             spec = spec.and(ProductSpecifications.costLessOrEqualsThan(maxCost));
-            //select p from ProductEntity p where true and p.price > minPrice and p.price < maxPrice
         }
         if (partTitle != null) {
             spec = spec.and(ProductSpecifications.titleLike(partTitle));
-            //select p from ProductEntity p where true and p.price < and p.title > minPrice like %partTitle%
-
         }
-        //select p from ProductEntity p where true and p.price > minPrice and p.price < maxPrice
-        return productDAO.findAll(spec, PageRequest.of(page - 1, 10));
+        return productDAO.findAll(spec, PageRequest.of(page - 1, 50));
+    }
+    @Transactional
+    public ProductsEntity update(ProductDTO productDTO) {
+        ProductsEntity productsEntity = productDAO.findById(productDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Can not update product, not in database"));
+        productsEntity.setCost(productDTO.getCost());
+        productsEntity.setTitle(productDTO.getTitle());
+        return productsEntity;
     }
 
-    public ProductDTO productDTOToUpdate(ProductDTO product) {
-        ProductsEntity productsEntity = getProductById(product.getId());
-        productsEntity.setTitle(product.getTitle());
-        productsEntity.setCost(product.getCost());
-        save(productsEntity);
-        return product;
-    }
-    public ProductDTO productDTOToSave(ProductDTO product) {
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setTitle(product.getTitle());
-        productsEntity.setCost(product.getCost());
-        save(productsEntity);
-        return product;
-    }
+    public Optional<ProductsEntity> findById(Long id) { return productDAO.findById(id); }
 }

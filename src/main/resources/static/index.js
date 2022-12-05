@@ -11,25 +11,10 @@ angular.module('app', []).controller('indexControllerProd', function ($scope, $h
                 min_cost: $scope.filter ? $scope.filter.min_cost : null,
                 max_cost: $scope.filter ? $scope.filter.max_cost : null
             }
-        }).then(function (responce){
-            $scope.ProductList = responce.data.content;
+        }).then(function (response){
+            $scope.ProductsPage = response.data;
         });
     };
-
-
-    $scope.deleteProduct = function (productId) {
-        $http.delete(contextPath + '/products/' + productId)
-            .then(function (responce) {
-                $scope.loadProducts();
-            });
-    }
-    $scope.createProduct = function () {
-        console.log($scope.newProduct);
-        $http.post(contextPath +'/products', $scope.newProduct)
-            .then(function (responce){
-                $scope.loadProducts();
-            });
-    }
 
     $scope.loadProducts();
 });
