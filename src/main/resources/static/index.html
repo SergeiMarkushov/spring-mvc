@@ -33,7 +33,6 @@
         </div>
         <p></p>
         <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Искать</button>
-        <button class="btn btn-danger btn-sm" style="width: 100%;" ng-click="loadProducts()">Сбросить</button>
     </form>
 
     <h3>Список продуктов</h3>
@@ -42,41 +41,15 @@
             <td>ID</td>
             <td>Название продукта</td>
             <td>Цена, руб.</td>
-            <td>Действия</td>
         </tr>
         <tbody>
-        <tr ng-repeat="p in ProductList">
+        <tr ng-repeat="p in ProductsPage.content">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.cost}}</td>
-            <td>
-                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
-                <button class="btn btn-info" ng-click="showInfo(p.id)">Информация</button>
-            </td>
         </tr>
         </tbody>
     </table>
-
-    <p></p>
-    <h3>Добавить продукт</h3>
-    <form novalidate ng-submit="createProduct()">
-        <input class="form-control" type="text" placeholder="Название" ng-model="newProduct.title">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Цена" ng-model="newProduct.cost">
-        <p></p>
-        <button type="submit" class="btn btn-outline-success">Добавить товар</button>
-    </form>
-
-    <p></p>
-    <p></p>
-<!--    <h3>Фильтр по цене</h3>-->
-<!--    <form novalidate ng-submit="findProductByPriceBetween()">-->
-<!--        <input class="form-control" type="number" placeholder="Минимальная цена" ng-model="filterPrice.minPrice">-->
-<!--        <p></p>-->
-<!--        <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="filterPrice.maxPrice">-->
-<!--        <p></p>-->
-<!--        <button type="submit" class="btn btn-outline-success">Фильтровать</button> <button class="btn btn-danger" ng-click="showProducts()">Сбросить</button>-->
-<!--    </form>-->
 </div>
 
 </body>

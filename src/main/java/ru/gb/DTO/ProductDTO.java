@@ -1,19 +1,15 @@
 package ru.gb.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.gb.model.ProductsEntity;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductDTO {
     private Long id;
     private String title;
     private Integer cost;
 
-    public ProductDTO(ProductsEntity product){
-        this.title = product.getTitle();
-        this.id = product.getId();
-        this.cost = product.getCost();
-    }
 }
