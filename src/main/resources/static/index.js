@@ -16,5 +16,28 @@ angular.module('app', []).controller('indexControllerProd', function ($scope, $h
         });
     };
 
+    $scope.loadCart = function () {
+        $http.get(contextPath + '/cart')
+            .then(function (response) {
+                $scope.CartList = response.data;
+            });
+    };
+
+    $scope.deleteFromCart = function (productId) {
+        $http.delete(contextPath +'/cart/remove/{productId}/product' + productId)
+            .then(function (response) {
+                $scope.CartList = response.data;
+            });
+    };
+
+    $scope.addToCart = function (productId) {
+        $http.get(contextPath + '/cart' + productId)
+            .then(function (responce){
+                alert("Added " + productId);
+                $scope.CartList = responce.data;
+            });
+    };
+
     $scope.loadProducts();
+    $scope.loadCart();
 });
