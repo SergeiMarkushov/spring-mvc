@@ -26,7 +26,6 @@ angular.module('app', []).controller('indexControllerProd', function ($scope, $h
     $scope.deleteFromCart = function (productId) {
         $http.get(contextPath +'/cart/remove/' + productId)
             .then(function (response) {
-                $scope.CartList = response.data;
                 $scope.loadCart();
             });
     };
