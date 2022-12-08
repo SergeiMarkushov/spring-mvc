@@ -24,14 +24,14 @@ angular.module('app', []).controller('indexControllerProd', function ($scope, $h
     };
 
     $scope.deleteFromCart = function (productId) {
-        $http.delete(contextPath +'/cart/remove/{productId}/product' + productId)
+        $http.get(contextPath +'/cart/remove/' + productId)
             .then(function (response) {
                 $scope.CartList = response.data;
             });
     };
 
     $scope.addToCart = function (productId) {
-        $http.get(contextPath + '/cart' + productId)
+        $http.get(contextPath + '/cart/add' + productId)
             .then(function (responce){
                 alert("Added " + productId);
                 $scope.CartList = responce.data;

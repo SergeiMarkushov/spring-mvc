@@ -1,35 +1,40 @@
 package ru.gb.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.serveces.CartService;
-import ru.gb.serveces.LineItem;
+import ru.gb.DTO.ProductDTO;
+import ru.gb.convertors.ProductConvertor;
+import ru.gb.exceptions.ResourceNotFoundException;
+import ru.gb.model.ProductsEntity;
+import ru.gb.serveces.Cart;
+import ru.gb.serveces.ProductService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cart")
+@RequiredArgsConstructor
 public class CartController {
-
-    private final CartService cartService;
-
-    @Autowired
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
-    }
-
-    @PostMapping("/{productId}/product")
-    public void addProductToCart(@PathVariable("productId") Long productId, @RequestParam("quantity") Integer quantity) {
-        cartService.addProductToCart(productId,quantity);
-    }
+    private final ProductService productService;
+    private final Cart cart;
+    private final ProductConvertor productConvertor;
 
     @GetMapping
-    public List<LineItem> showCart () {
-        return cartService.findAllInCart();
+    public List<ProductDTO> getCartList() {
+        return cart.getProductList();
     }
 
-    @DeleteMapping("/remove/{productId}/product")
-    public void deleteProductFroCart(@PathVariable("productId") Long productId) {
-        cartService.removeProductFromCart(productId,1);
+    @PostMapping("/add/{id}")
+    public void addProductToCart(@RequestParam(value = "id") Long id) {
+        ProductsEntity product = productService.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Not fount id: " + id));
+        ProductDTO productDTO = productConvertor.entityToDTO(product);
+        cart.addProduct(productDTO);
+    }
+
+    @GetMapping("/remove/{id}")
+    public void deleteById(@PathVariable Long id) {
+        productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product not found id: " + id));
+        cart.delete(id);
     }
 }
