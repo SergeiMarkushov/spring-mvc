@@ -27,15 +27,20 @@ angular.module('app', []).controller('indexControllerProd', function ($scope, $h
         $http.get(contextPath +'/cart/remove/' + productId)
             .then(function (response) {
                 $scope.CartList = response.data;
+                $scope.loadCart();
             });
     };
 
     $scope.addToCart = function (productId) {
-        $http.get(contextPath + '/cart/add' + productId)
-            .then(function (responce){
-                alert("Added " + productId);
-                $scope.CartList = responce.data;
-            });
+        $http({
+        url: contextPath + '/cart/add/',
+        method: 'POST',
+            params: {
+            productId: productId
+            }
+        }).then(function (response) {
+            $scope.loadCart();
+        }) ;
     };
 
     $scope.loadProducts();

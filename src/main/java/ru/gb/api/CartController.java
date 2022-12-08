@@ -24,10 +24,10 @@ public class CartController {
         return cart.getProductList();
     }
 
-    @PostMapping("/add/{id}")
-    public void addProductToCart(@RequestParam(value = "id") Long id) {
-        ProductsEntity product = productService.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException("Not fount id: " + id));
+    @PostMapping("/add/")
+    public void addProductToCart(@RequestParam Long productId) {
+        ProductsEntity product = productService.findById(productId).orElseThrow(() ->
+                new ResourceNotFoundException("Not fount id: " + productId));
         ProductDTO productDTO = productConvertor.entityToDTO(product);
         cart.addProduct(productDTO);
     }

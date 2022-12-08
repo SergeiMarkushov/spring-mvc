@@ -13,7 +13,7 @@ public class Cart {
     private List<ProductDTO> products = new ArrayList<>();
 
     public void delete(Long id) {
-        List<ProductDTO> productsForIter = new ArrayList<>();
+        List<ProductDTO> productsForIter = new ArrayList<>(products);
         for (ProductDTO productDTO : productsForIter) {
             if(productDTO.getId().equals(id)) {
                 products.remove(productDTO);
